@@ -51,8 +51,25 @@ def resolve_video_id(client: TwelveLabs, index_id: str, filename: str) -> str:
             return item.id
     raise RuntimeError("Unable to resolve video_id after indexing.")
 
+def format_transcription(transcription) -> str:
+    if not transcription:
+        return ""
 
-def summarize_local_video(video_path: str, index_id: str, prompt: str | None) -> str:
+    lines = []
+    for item in transcription:
+        text = getattr(item, "value", None)
+        if not text:
+            continue
+        start = getattr(item, "start", None)
+        end = getattr(item, "end", None)
+        if isinstance(start, (int, float)) and isinstance(end, (int, float)):
+            lines.append(f"[{start:.2f}-{end:.2f}] {text}")
+        else:
+            lines.append(text)
+
+    return "\n".join(lines).strip()
+
+def summarize_local_video(video_path: str, index_id: str, prompt: str | None) -> tuple[str, str]:
     api_key = os.getenv("TL_API_KEY")
     if not api_key:
         raise RuntimeError("Missing TL_API_KEY environment variable.")
@@ -79,6 +96,11 @@ def summarize_local_video(video_path: str, index_id: str, prompt: str | None) ->
         raise RuntimeError("Indexing request failed: missing indexed asset ID.")
     wait_for_indexed_asset_ready(client, index_id, indexed_asset.id)
 
+    indexed_asset_details = client.indexes.indexed_assets.retrieve(
+        index_id, indexed_asset.id, transcription=True
+    )
+    transcript_text = format_transcription(getattr(indexed_asset_details, "transcription", None))
+
     video_id = resolve_video_id(client, index_id, filename)
 
     summary = client.summarize(
@@ -88,7 +110,7 @@ def summarize_local_video(video_path: str, index_id: str, prompt: str | None) ->
     )
 
     # The SDK returns a response object with a `summary` field for type="summary".
-    return getattr(summary, "summary", str(summary))
+    return getattr(summary, "summary", str(summary)), transcript_text
 
 
 def main() -> int:
@@ -109,8 +131,14 @@ def main() -> int:
         print("Missing index ID. Pass --index-id or set TL_INDEX_ID.", file=sys.stderr)
         return 1
 
-    summary_text = summarize_local_video(args.video_path, args.index_id, args.prompt)
+    summary_text, transcript_text = summarize_local_video(args.video_path, args.index_id, args.prompt)
+    print("Summary:")
     print(summary_text)
+    print("\nTranscript:")
+    if transcript_text:
+        print(transcript_text)
+    else:
+        print("(empty)")
     return 0
 
 
