@@ -110,9 +110,9 @@ export default function InterviewPage() {
     return (
       <div className="space-y-3">
         <p className="text-sm text-red-600">{error}</p>
-        <Button variant="secondary" asChild>
-          <Link href="/interview/new">Back</Link>
-        </Button>
+        <Link href="/interview/new">
+          <Button variant="secondary">Back</Button>
+        </Link>
       </div>
     );
   }
@@ -132,9 +132,9 @@ export default function InterviewPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary" asChild>
-            <Link href="/interview/new">New</Link>
-          </Button>
+          <Link href="/interview/new">
+            <Button variant="secondary">New</Button>
+          </Link>
           <Button variant="ghost" onClick={() => router.refresh()}>
             Refresh
           </Button>

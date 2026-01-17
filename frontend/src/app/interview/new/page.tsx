@@ -52,9 +52,9 @@ export default function NewInterviewPage() {
             Paste a job link and we’ll generate a short set of behavioral questions.
           </p>
         </div>
-        <Button variant="secondary" asChild>
-          <Link href="/">Home</Link>
-        </Button>
+        <Link href="/">
+          <Button variant="secondary">Home</Button>
+        </Link>
       </div>
 
       <Card>

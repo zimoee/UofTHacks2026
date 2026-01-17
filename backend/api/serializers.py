@@ -60,11 +60,21 @@ class InterviewSerializer(serializers.ModelSerializer):
             "transcript_text",
             "ai_feedback",
             "personality_fit",
+            "generated_questions",
             "questions",
             "created_at",
             "updated_at",
         )
-        read_only_fields = ("id", "created_at", "updated_at", "video_object_key", "transcript_text", "ai_feedback", "personality_fit")
+        read_only_fields = (
+            "id",
+            "created_at",
+            "updated_at",
+            "video_object_key",
+            "transcript_text",
+            "ai_feedback",
+            "personality_fit",
+            "generated_questions",
+        )
 
 
 class CreateInterviewSerializer(serializers.Serializer):

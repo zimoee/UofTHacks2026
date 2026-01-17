@@ -20,6 +20,7 @@ from api.serializers import (
     UserSerializer,
 )
 from api.services.ai import generate_behavioral_questions
+from api.services.job_ingest import fetch_job_description_text
 from api.services.storage import presign_put_object
 from api.tasks import process_interview
 
@@ -106,18 +107,36 @@ class InterviewViewSet(viewsets.ModelViewSet):
         payload = CreateInterviewSerializer(data=request.data)
         payload.is_valid(raise_exception=True)
 
-        job_url = payload.validated_data.get("job_url")
-        title = payload.validated_data.get("title", "")
-        company = payload.validated_data.get("company", "")
+        job_url = payload.validated_data.get("job_url") or None
+        title = (payload.validated_data.get("title") or "").strip() or None
+        company = (payload.validated_data.get("company") or "").strip() or None
 
         with transaction.atomic():
             job = None
             if job_url:
-                job = Job.objects.create(user=request.user, url=job_url, title=title, company=company)
+                description = ""
+                try:
+                    description = fetch_job_description_text(url=job_url)
+                except Exception:
+                    description = ""
+                job = Job.objects.create(
+                    user=request.user,
+                    url=job_url,
+                    title=title or "",
+                    company=company or "",
+                    description=description,
+                )
 
             interview = Interview.objects.create(user=request.user, job=job, status=Interview.Status.CREATED)
 
-            generated = generate_behavioral_questions(job_url=job_url, company=company, title=title)
+            generated = generate_behavioral_questions(
+                job_url=job_url,
+                company=company,
+                title=title,
+                job_description=(job.description if job else None),
+            )
+            interview.generated_questions = generated.questions
+            interview.save(update_fields=["generated_questions", "updated_at"])
             for idx, q in enumerate(generated.questions):
                 InterviewQuestion.objects.create(
                     interview=interview,

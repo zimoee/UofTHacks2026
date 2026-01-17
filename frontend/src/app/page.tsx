@@ -19,9 +19,9 @@ export default function HomePage() {
           </p>
         </div>
         <div className="hidden sm:block">
-          <Button asChild>
-            <Link href="/interview/new">Start a mock interview</Link>
-          </Button>
+          <Link href="/interview/new">
+            <Button>Start a mock interview</Button>
+          </Link>
         </div>
       </header>
 
@@ -56,9 +56,9 @@ export default function HomePage() {
       </section>
 
       <div className="sm:hidden">
-        <Button className="w-full" asChild>
-          <Link href="/interview/new">Start a mock interview</Link>
-        </Button>
+        <Link href="/interview/new">
+          <Button className="w-full">Start a mock interview</Button>
+        </Link>
       </div>
     </main>
   );

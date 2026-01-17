@@ -54,6 +54,7 @@ class Interview(models.Model):
     transcript_text = models.TextField(blank=True)
     ai_feedback = models.JSONField(default=dict, blank=True)  # JSONB on Postgres
     personality_fit = models.JSONField(default=dict, blank=True)  # JSONB on Postgres
+    generated_questions = models.JSONField(default=list, blank=True)  # raw structured output from LLM
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
