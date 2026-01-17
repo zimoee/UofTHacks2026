@@ -203,6 +203,12 @@ export default function InterviewPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-lg border bg-slate-50 p-3">
+              <p className="text-sm font-medium">Interview storytelling identity</p>
+              <p className="mt-1 text-sm text-slate-700">
+                {interview.personality_fit?.archetype?.archetype ?? "—"}
+              </p>
+            </div>
+            <div className="rounded-lg border bg-slate-50 p-3">
               <p className="text-sm font-medium">Summary</p>
               <p className="mt-1 text-sm text-slate-700">{interview.ai_feedback?.summary ?? "—"}</p>
             </div>

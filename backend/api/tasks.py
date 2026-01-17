@@ -4,7 +4,7 @@ from celery import shared_task
 from django.db import transaction
 
 from api.models import Interview
-from api.services.ai import score_job_fit
+from api.services.ai import classify_archetype, score_job_fit
 from api.services.twelvelabs import analyze_video_from_storage
 
 
@@ -31,6 +31,7 @@ def process_interview(self, interview_id: str) -> None:
         )
         transcript = result.transcript
         feedback = {"summary": result.analysis, "strengths": [], "weaknesses": []}
+        archetype = classify_archetype(transcript=transcript, analysis=result.analysis)
 
         traits = getattr(getattr(interview.user, "personality_profile", None), "traits", {}) or {}
         job_payload = {
@@ -43,7 +44,7 @@ def process_interview(self, interview_id: str) -> None:
         with transaction.atomic():
             interview.transcript_text = transcript
             interview.ai_feedback = feedback
-            interview.personality_fit = fit
+            interview.personality_fit = {"job_fit": fit, "archetype": archetype}
             interview.status = Interview.Status.COMPLETE
             interview.save(
                 update_fields=["transcript_text", "ai_feedback", "personality_fit", "status", "updated_at"]
