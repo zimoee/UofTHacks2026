@@ -1,0 +1,52 @@
+from __future__ import annotations
+
+from celery import shared_task
+from django.db import transaction
+
+from api.models import Interview
+from api.services.ai import analyze_transcript_for_feedback, score_job_fit
+from api.services.transcription import transcribe_video
+
+
+@shared_task(bind=True, max_retries=2, default_retry_delay=10)
+def process_interview(self, interview_id: str) -> None:
+    try:
+        interview = Interview.objects.select_related("job", "user").get(id=interview_id)
+    except Interview.DoesNotExist:
+        return
+
+    if not interview.video_object_key:
+        interview.status = Interview.Status.FAILED
+        interview.ai_feedback = {"error": "No video_object_key on interview; cannot process."}
+        interview.save(update_fields=["status", "ai_feedback", "updated_at"])
+        return
+
+    try:
+        interview.status = Interview.Status.PROCESSING
+        interview.save(update_fields=["status", "updated_at"])
+
+        transcript = transcribe_video(object_key=interview.video_object_key).transcript
+        feedback = analyze_transcript_for_feedback(transcript=transcript)
+
+        traits = getattr(getattr(interview.user, "personality_profile", None), "traits", {}) or {}
+        job_payload = {
+            "url": interview.job.url if interview.job else "",
+            "company": interview.job.company if interview.job else "",
+            "title": interview.job.title if interview.job else "",
+        }
+        fit = score_job_fit(traits=traits, job=job_payload)
+
+        with transaction.atomic():
+            interview.transcript_text = transcript
+            interview.ai_feedback = feedback
+            interview.personality_fit = fit
+            interview.status = Interview.Status.COMPLETE
+            interview.save(
+                update_fields=["transcript_text", "ai_feedback", "personality_fit", "status", "updated_at"]
+            )
+    except Exception as exc:  # noqa: BLE001 - boilerplate task wrapper
+        interview.status = Interview.Status.FAILED
+        interview.ai_feedback = {"error": str(exc)}
+        interview.save(update_fields=["status", "ai_feedback", "updated_at"])
+        raise
+
