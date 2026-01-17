@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 
 import requests
 from django.conf import settings
@@ -205,3 +206,37 @@ def score_job_fit(*, traits: dict, job: dict) -> dict:
         "traits_used": traits,
         "job_used": job,
     }
+
+
+def classify_archetype(*, transcript: str, analysis: str) -> dict:
+    """
+    If AI_PROVIDER=gemini and GEMINI_API_KEY is set, returns an archetype classification.
+    """
+    try:
+        llm_out = _llm_generate_text(
+            prompt=(
+                "You are an interview analysis assistant. Classify the speaker into ONE archetype.\n"
+                "Archetypes:\n"
+                "- Bunny: The Self-Starter. Stories start with action: “I noticed… so I decided to…”, Emphasis on getting started, stepping up without being asked, Less time on planning, more on doing, Often first to volunteer or experiment.\n"
+                "- Penguin: The Team Player. Frequent use of “we”, Describes collaboration, communication, and support, Talks about resolving conflict or aligning people, Credits teammates naturally.\n"
+                "- Turtle: The Thoughtful Decision-Maker. Clearly explains why decisions were made, Mentions tradeoffs, risks, or constraints, Reflects on outcomes and lessons learned.\n"
+                "- Cat: The Ownership-Driven Contributor. Strong “I” ownership of outcomes, Focus on quality, responsibility, and follow-through, Goes deep into what they did and why it mattered, Often discusses accountability or standards.\n\n"
+                "Return ONLY valid JSON (no markdown) with this schema:\n"
+                '{ "archetype": string, "rationale": string }\n\n'
+                "Use the transcript and analysis below. Do not infer protected attributes.\n\n"
+                f"Analysis:\n{analysis}\n\n"
+                f"Transcript:\n{transcript}\n"
+            )
+        )
+        if llm_out:
+            payload = _extract_json_from_text(llm_out)
+            if payload:
+                parsed = json.loads(payload)
+                archetype = str(parsed.get("archetype", "")).strip()
+                rationale = str(parsed.get("rationale", "")).strip()
+                if archetype:
+                    return {"archetype": archetype, "rationale": rationale}
+    except Exception:
+        pass
+
+    return {"archetype": "Unknown", "rationale": "No archetype classification available."}

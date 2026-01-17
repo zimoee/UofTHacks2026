@@ -3,9 +3,9 @@ from __future__ import annotations
 from celery import shared_task
 from django.db import transaction
 
-from api.models import Interview
-from api.services.ai import score_job_fit
-from api.services.twelvelabs import analyze_video_from_storage
+from api.models import Interview, InterviewQuestion
+from api.services.ai import classify_archetype, score_job_fit
+from api.services.twelvelabs import DEFAULT_ANALYSIS_PROMPT, analyze_video_from_storage
 
 
 @shared_task(bind=True, max_retries=2, default_retry_delay=10)
@@ -25,12 +25,21 @@ def process_interview(self, interview_id: str) -> None:
         interview.status = Interview.Status.PROCESSING
         interview.save(update_fields=["status", "updated_at"])
 
+        first_question = (
+            InterviewQuestion.objects.filter(interview=interview).order_by("order").values_list("prompt", flat=True).first()
+        )
+        analysis_prompt = DEFAULT_ANALYSIS_PROMPT
+        if first_question:
+            analysis_prompt = f"Question: {first_question}\n\n{DEFAULT_ANALYSIS_PROMPT}"
+
         result = analyze_video_from_storage(
             object_key=interview.video_object_key,
             filename=interview.video_object_key.split("/")[-1],
+            prompt=analysis_prompt,
         )
         transcript = result.transcript
         feedback = {"summary": result.analysis, "strengths": [], "weaknesses": []}
+        archetype = classify_archetype(transcript=transcript, analysis=result.analysis)
 
         traits = getattr(getattr(interview.user, "personality_profile", None), "traits", {}) or {}
         job_payload = {
@@ -43,7 +52,7 @@ def process_interview(self, interview_id: str) -> None:
         with transaction.atomic():
             interview.transcript_text = transcript
             interview.ai_feedback = feedback
-            interview.personality_fit = fit
+            interview.personality_fit = {"job_fit": fit, "archetype": archetype}
             interview.status = Interview.Status.COMPLETE
             interview.save(
                 update_fields=["transcript_text", "ai_feedback", "personality_fit", "status", "updated_at"]
