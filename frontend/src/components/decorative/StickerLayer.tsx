@@ -37,16 +37,25 @@ export function StickerLayer() {
     []
   );
 
-  const chosen = React.useMemo(() => {
-    // Randomize variants while preventing adjacent duplicates (in placement order).
+  const fallbackChosen = React.useMemo(
+    () => starPlacements.map((_, i) => starVariants[i % starVariants.length]),
+    [starPlacements, starVariants]
+  );
+  const [chosen, setChosen] = React.useState(fallbackChosen);
+
+  React.useEffect(() => {
+    // Randomize on the client only to avoid hydration mismatches.
     const randInt = (maxExclusive: number) => {
-      const a = new Uint32Array(1);
-      crypto.getRandomValues(a);
-      return a[0] % maxExclusive;
+      if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+        const a = new Uint32Array(1);
+        crypto.getRandomValues(a);
+        return a[0] % maxExclusive;
+      }
+      return Math.floor(Math.random() * maxExclusive);
     };
 
     let prev = -1;
-    return starPlacements.map(() => {
+    const randomized = starPlacements.map(() => {
       let idx = randInt(starVariants.length);
       if (starVariants.length > 1) {
         while (idx === prev) idx = randInt(starVariants.length);
@@ -54,6 +63,7 @@ export function StickerLayer() {
       prev = idx;
       return starVariants[idx];
     });
+    setChosen(randomized);
   }, [starPlacements, starVariants]);
 
   return (
@@ -67,4 +77,3 @@ export function StickerLayer() {
     </div>
   );
 }
-
