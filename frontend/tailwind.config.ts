@@ -35,8 +35,13 @@ const config: Config = {
         glow: "0 0 0 1px rgba(232, 230, 224, 1), 0 12px 40px rgba(43, 41, 38, 0.10)",
       },
       fontFamily: {
-        script: ["var(--font-script)", "cursive"],
-        typewriter: ["var(--font-typewriter)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        typewriter: [
+          "var(--font-typewriter)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "monospace",
+        ],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       borderRadius: {
@@ -57,4 +62,3 @@ const config: Config = {
 };
 
 export default config;
-

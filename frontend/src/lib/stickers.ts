@@ -23,7 +23,6 @@ export const STICKERS = {
   star3: { src: "/stickers/star-3.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
   star4: { src: "/stickers/star-4.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
 
-  heart: { src: "/stickers/heart.svg", alt: "Heart sticker" },
   tapeBlue: { src: "/stickers/tape-blue.svg", alt: "Blue washi tape sticker" },
 } as const satisfies Record<string, StickerDef>;
 

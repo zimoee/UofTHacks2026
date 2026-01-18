@@ -7,10 +7,25 @@ import * as React from "react";
 import { MediaRecorderPanel } from "@/components/MediaRecorderPanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { devLogin, getInterview, presignUpload, submitInterview, type Interview } from "@/lib/api";
-import { uploadToLocalMultipartEndpoint, uploadToPresignedPutUrl } from "@/lib/upload";
+import {
+  devLogin,
+  getInterview,
+  presignUpload,
+  submitInterview,
+  type Interview,
+} from "@/lib/api";
+import {
+  uploadToLocalMultipartEndpoint,
+  uploadToPresignedPutUrl,
+} from "@/lib/upload";
 
 export default function InterviewPage() {
   const params = useParams<{ id: string }>();
@@ -60,7 +75,8 @@ export default function InterviewPage() {
   React.useEffect(() => {
     if (!queued) return;
     if (!interview) return;
-    if (interview.status === "complete" || interview.status === "failed") return;
+    if (interview.status === "complete" || interview.status === "failed")
+      return;
 
     const t = window.setInterval(() => {
       refresh().catch(() => {});
@@ -75,7 +91,9 @@ export default function InterviewPage() {
       return;
     }
     if (blob.size <= 0) {
-      setError("Recording is empty. Try recording again for at least a few seconds.");
+      setError(
+        "Recording is empty. Try recording again for at least a few seconds.",
+      );
       return;
     }
     const duration = await getBlobDuration(blob);
@@ -89,9 +107,14 @@ export default function InterviewPage() {
       await ensureAuth();
       const contentType = blob.type || "video/webm";
       const presigned = await presignUpload(interviewId, contentType);
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+      const apiBase =
+        process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
       if (presigned.mode === "local") {
-        await uploadToLocalMultipartEndpoint(apiBase, presigned.upload_url, blob);
+        await uploadToLocalMultipartEndpoint(
+          apiBase,
+          presigned.upload_url,
+          blob,
+        );
         setQueued(true);
         await refresh();
       } else {
@@ -147,9 +170,17 @@ export default function InterviewPage() {
 
   return (
     <div className="space-y-8">
+      {" "}
+      <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => router.back()}>
+          ← Back
+        </Button>
+      </div>{" "}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
-          <h1 className="type-title text-2xl sm:text-3xl">Mock interview session</h1>
+          <h1 className="type-title text-2xl sm:text-3xl">
+            Mock interview session
+          </h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
             Read the question(s), record your answer, and get feedback
           </p>
@@ -160,7 +191,6 @@ export default function InterviewPage() {
           </Link>
         </div>
       </div>
-
       <section className="grid gap-6 lg:grid-cols-[1.05fr,0.95fr] lg:items-start">
         <div className="rounded-3xl border border-light-gray bg-off-white/70 p-6 shadow-paper">
           <div className="flex items-baseline justify-between gap-3">
@@ -175,9 +205,20 @@ export default function InterviewPage() {
                 .sort((a, b) => a.order - b.order)
                 .slice(0, 4)
                 .map((q, i) => {
-                  const tilt = i % 4 === 0 ? "-rotate-1" : i % 4 === 1 ? "rotate-1" : i % 4 === 2 ? "-rotate-2" : "rotate-2";
+                  const tilt =
+                    i % 4 === 0
+                      ? "-rotate-1"
+                      : i % 4 === 1
+                        ? "rotate-1"
+                        : i % 4 === 2
+                          ? "-rotate-2"
+                          : "rotate-2";
                   const bg =
-                    i % 3 === 0 ? "bg-butter-yellow/80" : i % 3 === 1 ? "bg-mint/55" : "bg-lavender/55";
+                    i % 3 === 0
+                      ? "bg-butter-yellow/80"
+                      : i % 3 === 1
+                        ? "bg-mint/55"
+                        : "bg-lavender/55";
                   return (
                     <li
                       key={q.id}
@@ -189,16 +230,24 @@ export default function InterviewPage() {
                     >
                       <div className="pointer-events-none absolute right-4 top-4 h-3 w-12 rotate-6 rounded-sm bg-white/40" />
                       <div className="flex items-center justify-between gap-3">
-                        <p className="font-sans text-xs font-semibold text-ink">Q{q.order + 1}</p>
-                        {q.competency ? <Badge variant="secondary">{q.competency}</Badge> : null}
+                        <p className="font-sans text-xs font-semibold text-ink">
+                          Q{q.order + 1}
+                        </p>
+                        {q.competency ? (
+                          <Badge variant="secondary">{q.competency}</Badge>
+                        ) : null}
                       </div>
-                      <p className="mt-2 font-typewriter text-sm text-ink/90">{q.prompt}</p>
+                      <p className="mt-2 font-typewriter text-sm text-ink/90">
+                        {q.prompt}
+                      </p>
                     </li>
                   );
                 })}
             </ol>
           ) : (
-            <p className="mt-4 font-typewriter text-sm text-warm-gray">No questions yet.</p>
+            <p className="mt-4 font-typewriter text-sm text-warm-gray">
+              No questions yet.
+            </p>
           )}
         </div>
 
@@ -210,7 +259,6 @@ export default function InterviewPage() {
           submitLabel="Submit"
         />
       </section>
-
       {interview.status === "complete" ? (
         <Card className="relative">
           <div
@@ -219,36 +267,50 @@ export default function InterviewPage() {
           />
           <CardHeader>
             <CardTitle>Feedback page</CardTitle>
-            <CardDescription>A gentle read-through, like notes from future-you.</CardDescription>
+            <CardDescription>
+              A gentle read-through, like notes from future-you.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-2xl border border-light-gray bg-off-white p-4 shadow-sm">
-              <p className="font-sans text-xs font-semibold text-ink">Interview storytelling identity</p>
+              <p className="font-sans text-xs font-semibold text-ink">
+                Interview storytelling identity
+              </p>
               <p className="mt-2 font-typewriter text-sm text-ink/90">
                 {interview.personality_fit?.archetype?.archetype ?? "—"}
               </p>
             </div>
             <div className="rounded-2xl border border-light-gray bg-off-white p-4 shadow-sm">
-              <p className="font-sans text-xs font-semibold text-ink">Summary</p>
+              <p className="font-sans text-xs font-semibold text-ink">
+                Summary
+              </p>
               <p className="mt-2 font-typewriter text-sm text-ink/90">
                 {interview.ai_feedback?.summary ?? "—"}
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-light-gray bg-mint/35 p-4 shadow-sm">
-                <p className="font-sans text-xs font-semibold text-ink">Strengths</p>
+                <p className="font-sans text-xs font-semibold text-ink">
+                  Strengths
+                </p>
                 <ul className="mt-2 list-disc space-y-1 pl-5 font-typewriter text-sm text-ink/90">
-                  {(interview.ai_feedback?.strengths ?? []).map((s: string, i: number) => (
-                    <li key={i}>{s}</li>
-                  ))}
+                  {(interview.ai_feedback?.strengths ?? []).map(
+                    (s: string, i: number) => (
+                      <li key={i}>{s}</li>
+                    ),
+                  )}
                 </ul>
               </div>
               <div className="rounded-2xl border border-light-gray bg-dusty-pink/35 p-4 shadow-sm">
-                <p className="font-sans text-xs font-semibold text-ink">Next improvements</p>
+                <p className="font-sans text-xs font-semibold text-ink">
+                  Next improvements
+                </p>
                 <ul className="mt-2 list-disc space-y-1 pl-5 font-typewriter text-sm text-ink/90">
-                  {(interview.ai_feedback?.weaknesses ?? []).map((s: string, i: number) => (
-                    <li key={i}>{s}</li>
-                  ))}
+                  {(interview.ai_feedback?.weaknesses ?? []).map(
+                    (s: string, i: number) => (
+                      <li key={i}>{s}</li>
+                    ),
+                  )}
                 </ul>
               </div>
             </div>
@@ -263,12 +325,13 @@ export default function InterviewPage() {
           </CardContent>
         </Card>
       ) : null}
-
       {interview.status === "failed" ? (
         <Card>
           <CardHeader>
             <CardTitle>Processing failed</CardTitle>
-            <CardDescription>Check backend logs and your S3/AI env vars.</CardDescription>
+            <CardDescription>
+              Check backend logs and your S3/AI env vars.
+            </CardDescription>
           </CardHeader>
           <CardContent className="font-typewriter text-sm text-ink/90">
             <pre className="whitespace-pre-wrap rounded-2xl border border-light-gray bg-off-white p-4 text-xs">

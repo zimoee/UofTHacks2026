@@ -1,10 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import { devLogin, listInterviews, type Interview } from "@/lib/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 
@@ -12,7 +19,11 @@ function formatDate(iso?: string) {
   if (!iso) return "—";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "—";
-  return d.toLocaleString(undefined, { month: "short", day: "2-digit", year: "numeric" });
+  return d.toLocaleString(undefined, {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
 }
 
 function sessionTitle(s: Interview) {
@@ -25,6 +36,7 @@ function sessionTitle(s: Interview) {
 }
 
 export default function SessionsPage() {
+  const router = useRouter();
   const [items, setItems] = React.useState<Interview[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -61,9 +73,14 @@ export default function SessionsPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
-          <h1 className="script-title text-4xl sm:text-5xl">Review previous sessions</h1>
+          <h1 className="script-title text-4xl sm:text-5xl">
+            Review previous sessions
+          </h1>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="secondary" onClick={() => router.back()}>
+            ← Back
+          </Button>
           <Link href="/interview/new">
             <Button>New session</Button>
           </Link>
@@ -100,7 +117,12 @@ export default function SessionsPage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.slice(0, 24).map((s, i) => {
-              const tilt = i % 3 === 0 ? "-rotate-1" : i % 3 === 1 ? "rotate-1" : "-rotate-2";
+              const tilt =
+                i % 3 === 0
+                  ? "-rotate-1"
+                  : i % 3 === 1
+                    ? "rotate-1"
+                    : "-rotate-2";
               const accent =
                 i % 4 === 0
                   ? "bg-butter-yellow/75"
@@ -126,13 +148,16 @@ export default function SessionsPage() {
                   >
                     <div className="pointer-events-none absolute right-4 top-4 h-3 w-12 rotate-6 rounded-sm bg-white/40" />
                     <p className="font-sans text-[11px] font-semibold text-warm-gray">
-                      {formatDate(s.created_at)} • {String(s.status || "").toUpperCase()}
+                      {formatDate(s.created_at)} •{" "}
+                      {String(s.status || "").toUpperCase()}
                     </p>
                     <p className="mt-2 font-typewriter text-base font-bold text-ink">
                       {sessionTitle(s)}
                     </p>
                     <p className="mt-2 line-clamp-2 font-typewriter text-sm text-ink/80">
-                      {s.questions?.length ? `${s.questions.length} questions` : "No questions saved"}
+                      {s.questions?.length
+                        ? `${s.questions.length} questions`
+                        : "No questions saved"}
                     </p>
                     <p className="mt-3 font-sans text-xs font-medium text-ink underline decoration-ink/20 underline-offset-4 opacity-80 transition group-hover:opacity-100">
                       Open →
@@ -148,14 +173,15 @@ export default function SessionsPage() {
       <Card className="rotate-1">
         <CardHeader>
           <CardTitle>Quick note</CardTitle>
-          <CardDescription>Make the next session a little bit (10%) better.</CardDescription>
+          <CardDescription>
+            Make the next session a little bit (10%) better.
+          </CardDescription>
         </CardHeader>
         <CardContent className="font-typewriter text-sm text-warm-gray">
-          Rewatch one session and write down: one strong sentence you’ll reuse, and one sentence you’ll
-          rewrite!
+          Rewatch one session and write down: one strong sentence you’ll reuse,
+          and one sentence you’ll rewrite!
         </CardContent>
       </Card>
     </div>
   );
 }
-

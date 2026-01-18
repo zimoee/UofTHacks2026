@@ -21,23 +21,37 @@ export type Interview = {
   transcript_text: string;
   ai_feedback: any;
   personality_fit: any;
-  questions: Array<{ id: string; prompt: string; competency: string; order: number }>;
+  questions: Array<{
+    id: string;
+    prompt: string;
+    competency: string;
+    order: number;
+  }>;
 };
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
 function getToken() {
   if (typeof window === "undefined") return null;
   return window.localStorage.getItem("token");
 }
 
-export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+export async function apiFetch<T>(
+  path: string,
+  init?: RequestInit,
+): Promise<T> {
   const token = getToken();
   const headers = new Headers(init?.headers);
-  if (!headers.has("Content-Type") && init?.body) headers.set("Content-Type", "application/json");
+  if (!headers.has("Content-Type") && init?.body)
+    headers.set("Content-Type", "application/json");
   if (token) headers.set("Authorization", `Token ${token}`);
 
-  const res = await fetch(`${API_BASE}${path}`, { ...init, headers, cache: "no-store" });
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...init,
+    headers,
+    cache: "no-store",
+  });
   const text = await res.text();
   const data = text ? JSON.parse(text) : null;
   if (!res.ok) {
@@ -57,8 +71,15 @@ export async function devLogin(username = "demo") {
   return data;
 }
 
-export async function createInterview(payload: { job_url?: string; title?: string; company?: string }) {
-  return apiFetch<Interview>("/api/interviews/", { method: "POST", body: JSON.stringify(payload) });
+export async function createInterview(payload: {
+  job_url?: string;
+  title?: string;
+  company?: string;
+}) {
+  return apiFetch<Interview>("/api/interviews/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 }
 
 export async function getInterview(id: string) {
@@ -71,7 +92,12 @@ export async function listInterviews() {
 
 export async function presignUpload(interviewId: string, contentType: string) {
   return apiFetch<
-    | { mode: "s3"; object_key: string; url: string; headers: Record<string, string> }
+    | {
+        mode: "s3";
+        object_key: string;
+        url: string;
+        headers: Record<string, string>;
+      }
     | { mode: "local"; upload_url: string }
   >(`/api/interviews/${interviewId}/presign_upload/`, {
     method: "POST",
@@ -79,10 +105,24 @@ export async function presignUpload(interviewId: string, contentType: string) {
   });
 }
 
-export async function submitInterview(interviewId: string, videoSizeBytes: number) {
-  return apiFetch<{ queued: boolean; interview_id: string }>(`/api/interviews/${interviewId}/submit/`, {
-    method: "POST",
-    body: JSON.stringify({ video_size_bytes: videoSizeBytes }),
-  });
+export async function submitInterview(
+  interviewId: string,
+  videoSizeBytes: number,
+) {
+  return apiFetch<{ queued: boolean; interview_id: string }>(
+    `/api/interviews/${interviewId}/submit/`,
+    {
+      method: "POST",
+      body: JSON.stringify({ video_size_bytes: videoSizeBytes }),
+    },
+  );
 }
 
+export async function getInterviewStatistics() {
+  return apiFetch<{
+    total_interviews: number;
+    average_duration_seconds: number;
+    most_practiced_competency: string | null;
+    total_questions_answered: number;
+  }>("/api/interviews/statistics/");
+}

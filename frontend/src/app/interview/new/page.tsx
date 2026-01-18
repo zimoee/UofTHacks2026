@@ -6,7 +6,13 @@ import * as React from "react";
 
 import { createInterview, devLogin } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
@@ -47,14 +53,22 @@ export default function NewInterviewPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
-          <h1 className="type-title text-2xl sm:text-3xl">Start a new practice session</h1>
+          <h1 className="type-title text-2xl sm:text-3xl">
+            Start a new practice session
+          </h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
-            Add a job link, company, and/or role to generate tailored interview questions.
+            Add a job link, company, and/or role to generate tailored interview
+            questions.
           </p>
         </div>
-        <Link href="/">
-          <Button variant="secondary">Back to home</Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" onClick={() => router.back()}>
+            ← Back
+          </Button>
+          <Link href="/">
+            <Button variant="secondary">Home</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr,0.85fr] lg:items-start">
@@ -97,9 +111,15 @@ export default function NewInterviewPage() {
               </div>
             </div>
 
-            {error ? <p className="font-typewriter text-sm text-red-700">{error}</p> : null}
+            {error ? (
+              <p className="font-typewriter text-sm text-red-700">{error}</p>
+            ) : null}
 
-            <Button onClick={onCreate} disabled={loading} className="w-full sm:w-auto">
+            <Button
+              onClick={onCreate}
+              disabled={loading}
+              className="w-full sm:w-auto"
+            >
               {loading ? (
                 <>
                   <Spinner className="h-4 w-4" /> Creating…
@@ -116,10 +136,15 @@ export default function NewInterviewPage() {
             className="pointer-events-none absolute right-6 top-5 h-4 w-20 rotate-3 rounded-sm bg-dusty-pink/60"
             aria-hidden="true"
           />
-          <h2 className="font-typewriter text-lg font-bold text-ink">Tiny prep checklist</h2>
+          <h2 className="font-typewriter text-lg font-bold text-ink">
+            Tiny prep checklist
+          </h2>
           <ul className="mt-3 space-y-2 font-typewriter text-sm text-ink/80">
             <li>• Speak out loud (it feels different than reading)</li>
-            <li>• Aim for one clear story (STAR): Situation, Task → Action → Result</li>
+            <li>
+              • Aim for one clear story (STAR): Situation, Task → Action →
+              Result
+            </li>
             <li>• Include 1 metric (even if it’s rough)</li>
             <li>• End with reflection: what you’d do differently next time</li>
           </ul>
@@ -128,4 +153,3 @@ export default function NewInterviewPage() {
     </div>
   );
 }
-

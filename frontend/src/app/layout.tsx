@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Allura, Courier_Prime, DM_Sans } from "next/font/google";
+import { Courier_Prime, DM_Sans } from "next/font/google";
 
 import { StickerLayer } from "@/components/decorative/StickerLayer";
+import { HomeMascots } from "@/components/layout/HomeMascots";
 
 import "./globals.css";
-
-const fontScript = Allura({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-script",
-});
 
 const fontTypewriter = Courier_Prime({
   weight: ["400", "700"],
@@ -32,18 +27,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-character="professional">
-      <body className={`${fontScript.variable} ${fontTypewriter.variable} ${fontSans.variable}`}>
+      <body className={`${fontTypewriter.variable} ${fontSans.variable}`}>
         <div className="relative min-h-screen paper-bg">
           <StickerLayer />
           <header className="sticky top-0 z-20 border-b border-light-gray/80 bg-cream/80 backdrop-blur">
             <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-              <Link href="/" className="group inline-flex items-baseline gap-2">
-                <span className="font-script text-3xl leading-none text-ink transition group-hover:-rotate-1">
+              <Link href="/" className="group inline-flex items-center gap-2">
+                <span className="font-typewriter text-3xl leading-none text-ink transition group-hover:-rotate-1">
                   Interview Journal
                 </span>
-                <span className="hidden font-typewriter text-xs text-warm-gray sm:inline">
-                  practice • record • reflect
-                </span>
+                <HomeMascots />
               </Link>
 
               <nav className="flex items-center gap-2">
@@ -61,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </header>
 
-          <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">{children}</main>
+          <main className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">{children}</main>
         </div>
       </body>
     </html>
