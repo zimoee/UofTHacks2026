@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from collections import Counter
-
+import random
 from django.contrib.auth import authenticate, get_user_model
 from django.conf import settings
 from django.db import transaction
@@ -75,7 +75,7 @@ def dev_login(request):
     username = (request.data.get("username") or "demo").strip() or "demo"
     user, _ = User.objects.get_or_create(username=username, defaults={"email": f"{username}@example.com"})
     token, _ = Token.objects.get_or_create(user=user)
-    PersonalityProfile.objects.get_or_create(user=user, defaults={"traits": {"openness": 0.7, "conscientiousness": 0.6}})
+    PersonalityProfile.objects.get_or_create(user=user, defaults={"traits": {"confidence": 64, "clarity": 71, "structure": 58}})
     return Response({"token": token.key, "user": UserSerializer(user).data})
 
 
@@ -212,6 +212,17 @@ class InterviewViewSet(viewsets.ModelViewSet):
                 return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
         else:
             process_interview.delay(str(interview.id))
+   
+        profile = PersonalityProfile.objects.filter(user=request.user).first()
+        if profile is None:
+            PersonalityProfile.objects.create(user=request.user, traits={"confidence": 64, "clarity": 71, "structure": 58})
+            profile = PersonalityProfile.objects.filter(user=request.user).first()
+        traight_map = {1: "structure", 2: "clarity", 3: "confidence"}
+        traight = traight_map[random.randint(1, 3)]
+        traits = profile.traits
+        traits[traight] = min(profile.traits.get(traight, 59) + 5, 100)
+        profile.traits = traits
+        profile.save(update_fields=["traits", "updated_at"])
 
         return Response({"uploaded": True, "object_key": saved_path, "queued": True, "interview_id": str(interview.id)})
 

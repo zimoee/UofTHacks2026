@@ -85,7 +85,7 @@ export default function NewInterviewPage() {
               <Label htmlFor="jobUrl">Job link</Label>
               <Input
                 id="jobUrl"
-                placeholder="https://linkedin.com/jobs/..."
+                placeholder="https://www.linkedin.com/jobs/..."
                 value={jobUrl}
                 onChange={(e) => setJobUrl(e.target.value)}
               />

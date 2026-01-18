@@ -21,7 +21,7 @@ const fontSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "Interview Journal",
-  description: "Record a behavioral interview answer and get strengths/weaknesses feedback.",
+  description: "Record a mock behavioral interview and get feedback.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

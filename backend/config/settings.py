@@ -12,7 +12,7 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-secret-key")
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",") if h.strip()]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "api.itsnotyouitsthe.tech"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -97,8 +97,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CORS / Frontend
 CORS_ALLOW_CREDENTIALS = True
-cors_origins = [o.strip() for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
-CORS_ALLOWED_ORIGINS = cors_origins
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "https://itsnotyouitsthe.tech", "https://www.itsnotyouitsthe.tech"]
 
 # DRF
 REST_FRAMEWORK = {

@@ -170,12 +170,11 @@ export default function InterviewPage() {
 
   return (
     <div className="space-y-8">
-      {" "}
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <Button variant="secondary" size="sm" onClick={() => router.back()}>
           ← Back
         </Button>
-      </div>{" "}
+      </div> */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
           <h1 className="type-title text-2xl sm:text-3xl">
@@ -186,9 +185,7 @@ export default function InterviewPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/interview/new">
-            <Button variant="secondary">New session</Button>
-          </Link>
+          <Button variant="secondary" onClick={() => router.back()}>← Back</Button>
         </div>
       </div>
       <section className="grid gap-6 lg:grid-cols-[1.05fr,0.95fr] lg:items-start">

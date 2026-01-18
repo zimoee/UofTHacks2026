@@ -78,9 +78,9 @@ export default function SessionsPage() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="secondary" onClick={() => router.back()}>
+          {/* <Button variant="secondary" onClick={() => router.back()}>
             ← Back
-          </Button>
+          </Button> */}
           <Link href="/interview/new">
             <Button>New session</Button>
           </Link>

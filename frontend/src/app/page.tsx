@@ -9,11 +9,11 @@ export default function HomePage() {
     <div className="space-y-10">
       <section className="relative overflow-hidden rounded-3xl border border-light-gray bg-off-white/60 p-8 shadow-paper sm:p-10">
         <div
-          className="pointer-events-none absolute left-8 top-6 h-6 w-28 -rotate-2 rounded-sm bg-dusty-pink/70"
+          className="pointer-events-none absolute left-8 top-6 h-6 w-28 -rotate-6 rounded-sm bg-dusty-pink/70"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute right-10 top-10 h-5 w-24 rotate-2 rounded-sm bg-soft-blue/60"
+          className="pointer-events-none absolute right-10 top-10 h-5 w-24 rotate-6 rounded-sm bg-soft-blue/60"
           aria-hidden="true"
         />
 
