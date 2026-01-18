@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-secret-key")
-DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "api.itsnotyouitsthe.tech", "uofthacks2026-production-1374.up.railway.app"]
 
