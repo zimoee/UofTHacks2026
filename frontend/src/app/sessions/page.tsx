@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 
 import { devLogin, listInterviews, type Interview } from "@/lib/api";
@@ -25,6 +26,7 @@ function sessionTitle(s: Interview) {
 }
 
 export default function SessionsPage() {
+  const router = useRouter();
   const [items, setItems] = React.useState<Interview[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
@@ -64,6 +66,9 @@ export default function SessionsPage() {
           <h1 className="script-title text-4xl sm:text-5xl">Review previous sessions</h1>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="secondary" onClick={() => router.back()}>
+            ← Back
+          </Button>
           <Link href="/interview/new">
             <Button>New session</Button>
           </Link>

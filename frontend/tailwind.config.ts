@@ -36,7 +36,13 @@ const config: Config = {
       },
       fontFamily: {
         script: ["var(--font-script)", "cursive"],
-        typewriter: ["var(--font-typewriter)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        typewriter: [
+          "var(--font-typewriter)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "monospace",
+        ],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       borderRadius: {
@@ -57,4 +63,3 @@ const config: Config = {
 };
 
 export default config;
-

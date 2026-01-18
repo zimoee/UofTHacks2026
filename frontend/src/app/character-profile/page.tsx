@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { InterviewStatistics } from "@/components/InterviewStatistics";
 
 const BUNNY_DRAWING_SRC = "/characters/bunny.png"; // drop your drawing here
 const BUNNY_FALLBACK_SRC = "/characters/bunny-pixel.svg";
@@ -130,6 +131,14 @@ export default function CharacterProfilePage() {
           </div>
         </div>
       </div>
+
+      <section className="space-y-4">
+        <div>
+          <h2 className="font-typewriter text-lg font-bold text-ink">Interview Statistics</h2>
+          <p className="text-sm text-warm-gray">Track your overall practice progress</p>
+        </div>
+        <InterviewStatistics />
+      </section>
     </div>
   );
 }

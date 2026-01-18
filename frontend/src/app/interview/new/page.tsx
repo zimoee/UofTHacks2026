@@ -52,9 +52,14 @@ export default function NewInterviewPage() {
             Add a job link, company, and/or role to generate tailored interview questions.
           </p>
         </div>
-        <Link href="/">
-          <Button variant="secondary">Back to home</Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" onClick={() => router.back()}>
+            ← Back
+          </Button>
+          <Link href="/">
+            <Button variant="secondary">Home</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr,0.85fr] lg:items-start">

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { TypingText } from "@/components/TypingText";
 
 export default function HomePage() {
   return (
@@ -23,17 +24,20 @@ export default function HomePage() {
               <Badge>1.2 hours of practice completed</Badge>
             </div>
 
-            <h1 className="script-title text-4xl leading-tight sm:text-5xl">
-              Practice interviews like you’re writing in your favorite journal.
+            <h1 className="font-typewriter text-3xl leading-tight sm:text-4xl">
+              <TypingText text="Practice interviews like you're writing in your favorite journal." speed={40} />
             </h1>
             <p className="max-w-xl font-typewriter text-base text-warm-gray sm:text-lg">
-              Paste a job link, get tailored behavioral questions, record out loud, and receive
-              good feedback you can actually use. Plus, check out which interview identity critter you get!
+              Paste a job link, get tailored behavioral questions, record out
+              loud, and receive good feedback you can actually use. Plus, check
+              out which interview identity critter you get!
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link href="/interview/new">
-                <Button className="w-full sm:w-auto">Start a mock interview</Button>
+                <Button className="w-full sm:w-auto">
+                  Start a mock interview
+                </Button>
               </Link>
               <Link href="/interview/new" className="w-full sm:w-auto">
                 <Button variant="secondary" className="w-full sm:w-auto">
@@ -56,7 +60,8 @@ export default function HomePage() {
                     Review previous sessions
                   </p>
                   <p className="mt-2 max-w-[46ch] font-typewriter text-sm text-ink/75 sm:text-base">
-                    Open your past notes, rewatch a mock interview, and make the next one even better!
+                    Open your past notes, rewatch a mock interview, and make the
+                    next one even better!
                   </p>
                   <p className="mt-4 inline-flex font-sans text-xs font-semibold text-ink underline decoration-ink/20 underline-offset-4">
                     Open the journal →
@@ -76,7 +81,8 @@ export default function HomePage() {
                     Identity profile
                   </p>
                   <p className="mt-2 max-w-[46ch] font-typewriter text-sm text-ink/75 sm:text-base">
-                    See your identity critter, Confidence, Clarity, and Structure progress, and pick one to level up.
+                    See your identity critter, Confidence, Clarity, and
+                    Structure progress, and pick one to level up.
                   </p>
                   <p className="mt-4 inline-flex font-sans text-xs font-semibold text-ink underline decoration-ink/20 underline-offset-4">
                     Open profile →
@@ -84,11 +90,9 @@ export default function HomePage() {
                 </div>
               </Link>
             </div>
-
           </div>
         </div>
       </section>
     </div>
   );
 }
-

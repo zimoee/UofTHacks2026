@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from collections import Counter
 
 from django.contrib.auth import authenticate, get_user_model
 from django.conf import settings
@@ -229,3 +230,40 @@ class InterviewViewSet(viewsets.ModelViewSet):
         else:
             process_interview.delay(str(interview.id))
         return Response({"queued": True, "interview_id": str(interview.id)})
+
+    @action(detail=False, methods=["GET"])
+    def statistics(self, request):
+        """Get user interview statistics: total interviews, average duration, most practiced competency."""
+        user = request.user
+        interviews = Interview.objects.filter(user=user)
+        
+        total_interviews = interviews.count()
+        
+        # Calculate average duration (from video duration in milliseconds)
+        durations = []
+        for interview in interviews:
+            if interview.ai_feedback and "duration_ms" in interview.ai_feedback:
+                durations.append(interview.ai_feedback["duration_ms"])
+        
+        average_duration_ms = sum(durations) / len(durations) if durations else 0
+        average_duration_secs = int(average_duration_ms / 1000)
+        
+        # Get most practiced competency
+        competencies = []
+        for interview in interviews:
+            questions = InterviewQuestion.objects.filter(interview=interview)
+            for question in questions:
+                if question.competency:
+                    competencies.append(question.competency)
+        
+        most_practiced = None
+        if competencies:
+            competency_counts = Counter(competencies)
+            most_practiced = competency_counts.most_common(1)[0][0]
+        
+        return Response({
+            "total_interviews": total_interviews,
+            "average_duration_seconds": average_duration_secs,
+            "most_practiced_competency": most_practiced,
+            "total_questions_answered": len(competencies),
+        })

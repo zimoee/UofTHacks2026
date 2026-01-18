@@ -86,3 +86,12 @@ export async function submitInterview(interviewId: string, videoSizeBytes: numbe
   });
 }
 
+export async function getInterviewStatistics() {
+  return apiFetch<{
+    total_interviews: number;
+    average_duration_seconds: number;
+    most_practiced_competency: string | null;
+    total_questions_answered: number;
+  }>("/api/interviews/statistics/");
+}
+
