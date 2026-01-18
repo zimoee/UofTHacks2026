@@ -62,9 +62,6 @@ export default function SessionsPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
           <h1 className="script-title text-4xl sm:text-5xl">Review previous sessions</h1>
-          <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
-            Your little stack of practice runs—open one to rewatch, reread, and iterate.
-          </p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/interview/new">
@@ -151,11 +148,11 @@ export default function SessionsPage() {
       <Card className="rotate-1">
         <CardHeader>
           <CardTitle>Quick note</CardTitle>
-          <CardDescription>Make the next session 10% better.</CardDescription>
+          <CardDescription>Make the next session a little bit (10%) better.</CardDescription>
         </CardHeader>
         <CardContent className="font-typewriter text-sm text-warm-gray">
           Rewatch one session and write down: one strong sentence you’ll reuse, and one sentence you’ll
-          rewrite.
+          rewrite!
         </CardContent>
       </Card>
     </div>

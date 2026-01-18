@@ -151,7 +151,7 @@ export default function InterviewPage() {
         <div className="space-y-2">
           <h1 className="type-title text-2xl sm:text-3xl">Mock interview session</h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
-            Answer out loud while recording. When you stop, upload to generate feedback.
+            Read the question(s), record your answer, and get feedback
           </p>
         </div>
         <div className="flex items-center gap-2">

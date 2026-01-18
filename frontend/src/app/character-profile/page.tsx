@@ -53,8 +53,7 @@ export default function CharacterProfilePage() {
         <div className="space-y-2">
           <h1 className="script-title text-4xl sm:text-5xl">Character profile</h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
-            A friendly snapshot of how you’re showing up right now—so your next session has a clear
-            focus.
+            Your interview storytelling identity!
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -98,7 +97,7 @@ export default function CharacterProfilePage() {
             <div className="rounded-3xl border border-light-gray bg-off-white/65 p-6 shadow-paper">
               <p className="font-typewriter text-lg font-bold text-ink">Today’s focus</p>
               <p className="mt-1 font-typewriter text-sm text-warm-gray">
-                Pick one bar to improve by 10% in your next recording.
+                Pick 1 bar to improve by 10% in your next mock interview
               </p>
 
               <div className="mt-5 space-y-4">
@@ -119,13 +118,13 @@ export default function CharacterProfilePage() {
 
             <Card className="-rotate-1">
               <CardHeader>
-                <CardTitle>Micro-coaching (temp)</CardTitle>
-                <CardDescription>Small changes with big payoff.</CardDescription>
+                <CardTitle>Notes:</CardTitle>
+                <CardDescription>Keep making small improvements!</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2 font-typewriter text-sm text-ink/80">
-                <p>• Confidence: end with one crisp outcome sentence.</p>
-                <p>• Clarity: say your point first, then tell the story.</p>
-                <p>• Structure: label STAR out loud (Situation, Task, Action, Result).</p>
+                <p>• Confidence: end with one concise, crisp outcome sentence</p>
+                <p>• Clarity: say your point first, then tell the story</p>
+                <p>• Structure: try labelling STAR out loud (Situation, Task, Action, Result)</p>
               </CardContent>
             </Card>
           </div>

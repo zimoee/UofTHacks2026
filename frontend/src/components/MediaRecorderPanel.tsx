@@ -163,7 +163,7 @@ export function MediaRecorderPanel({
       <CardHeader>
         <CardTitle>Record your answers</CardTitle>
         <CardDescription>
-          Record up to {Math.round(maxDurationMs / 1000)} seconds. We’ll auto-stop at the limit.
+          Record up to {Math.round(maxDurationMs / 1000)} seconds
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

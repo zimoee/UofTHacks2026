@@ -19,16 +19,16 @@ export default function HomePage() {
         <div className="relative grid gap-10 lg:grid-cols-[1.15fr,0.85fr] lg:items-center">
           <div className="space-y-5">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="secondary">Nostalgic • Approachable</Badge>
-              <Badge>Practice space</Badge>
+              <Badge variant="secondary">Welcome back!</Badge>
+              <Badge>1.2 hours of practice completed</Badge>
             </div>
 
             <h1 className="script-title text-4xl leading-tight sm:text-5xl">
               Practice interviews like you’re writing in your favorite journal.
             </h1>
             <p className="max-w-xl font-typewriter text-base text-warm-gray sm:text-lg">
-              Paste a job link, get a tiny stack of behavioral prompts, record out loud, and receive
-              encouraging feedback you can actually use.
+              Paste a job link, get tailored behavioral questions, record out loud, and receive
+              good feedback you can actually use. Plus, check out which interview identity critter you get!
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -41,9 +41,6 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
-            <p className="text-xs text-warm-gray">
-              Tip: keep answers to ~60 seconds. Clarity beats speed.
-            </p>
           </div>
 
           {/* Big sticky note CTA */}
@@ -59,10 +56,10 @@ export default function HomePage() {
                     Review previous sessions
                   </p>
                   <p className="mt-2 max-w-[46ch] font-typewriter text-sm text-ink/75 sm:text-base">
-                    Open your past practice notes, rewatch a take, and make the next one cleaner.
+                    Open your past notes, rewatch a mock interview, and make the next one even better!
                   </p>
                   <p className="mt-4 inline-flex font-sans text-xs font-semibold text-ink underline decoration-ink/20 underline-offset-4">
-                    Open the stack →
+                    Open the journal →
                   </p>
                 </div>
               </Link>
@@ -76,10 +73,10 @@ export default function HomePage() {
                 <div className="relative mx-auto rotate-[1deg] rounded-3xl border border-light-gray bg-soft-blue/28 p-6 shadow-paper transition duration-300 ease-out group-hover:-translate-y-1 group-hover:shadow-lift sm:p-8">
                   <div className="pointer-events-none absolute -right-2 -top-2 h-0 w-0 border-b-[22px] border-l-[22px] border-b-transparent border-l-white/70" />
                   <p className="font-typewriter text-xl font-bold text-ink sm:text-2xl">
-                    Character profile
+                    Identity profile
                   </p>
                   <p className="mt-2 max-w-[46ch] font-typewriter text-sm text-ink/75 sm:text-base">
-                    See your Confidence, Clarity, and Structure bars—and pick one to level up next.
+                    See your identity critter, Confidence, Clarity, and Structure progress, and pick one to level up.
                   </p>
                   <p className="mt-4 inline-flex font-sans text-xs font-semibold text-ink underline decoration-ink/20 underline-offset-4">
                     Open profile →

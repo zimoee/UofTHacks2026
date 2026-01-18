@@ -49,8 +49,7 @@ export default function NewInterviewPage() {
         <div className="space-y-2">
           <h1 className="type-title text-2xl sm:text-3xl">Start a new practice session</h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
-            Add a job link if you have one. If not, just type a company + role and we’ll still create a
-            session.
+            Add a job link, company, and/or role to generate tailored interview questions.
           </p>
         </div>
         <Link href="/">
@@ -66,14 +65,13 @@ export default function NewInterviewPage() {
           />
           <CardHeader>
             <CardTitle>Job context</CardTitle>
-            <CardDescription>Optional, but improves question quality.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="jobUrl">Job link</Label>
               <Input
                 id="jobUrl"
-                placeholder="https://... (Greenhouse, Lever, LinkedIn, etc.)"
+                placeholder="https://..."
                 value={jobUrl}
                 onChange={(e) => setJobUrl(e.target.value)}
               />
@@ -83,7 +81,7 @@ export default function NewInterviewPage() {
                 <Label htmlFor="company">Company</Label>
                 <Input
                   id="company"
-                  placeholder="e.g. Stripe"
+                  placeholder="e.g. TwelveLabs"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
@@ -110,11 +108,6 @@ export default function NewInterviewPage() {
                 "Generate questions"
               )}
             </Button>
-
-            <p className="font-typewriter text-xs text-warm-gray">
-              Dev mode uses <span className="font-bold text-ink">/api/auth/dev-login</span> for a demo
-              token.
-            </p>
           </CardContent>
         </Card>
 
@@ -125,10 +118,10 @@ export default function NewInterviewPage() {
           />
           <h2 className="font-typewriter text-lg font-bold text-ink">Tiny prep checklist</h2>
           <ul className="mt-3 space-y-2 font-typewriter text-sm text-ink/80">
-            <li>• Speak out loud (it feels different than reading).</li>
-            <li>• Aim for one clear story: situation → task → action → result.</li>
-            <li>• Include one metric (even if it’s rough).</li>
-            <li>• End with reflection: what you’d do differently next time.</li>
+            <li>• Speak out loud (it feels different than reading)</li>
+            <li>• Aim for one clear story (STAR): Situation, Task → Action → Result</li>
+            <li>• Include 1 metric (even if it’s rough)</li>
+            <li>• End with reflection: what you’d do differently next time</li>
           </ul>
         </div>
       </div>
