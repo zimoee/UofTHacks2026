@@ -1,0 +1,10 @@
+dotenv==0.9.9
+uuid==1.30
+asgiref==3.11.0
+django==6.0.1
+django-cors-headers==4.9.0
+djangorestframework==3.16.1
+djangorestframework-simplejwt==5.5.1
+sqlparse==0.5.5
+tzdata==2025.3
+google-genai==1.59.0
