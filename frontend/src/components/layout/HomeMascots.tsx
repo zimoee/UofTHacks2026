@@ -33,7 +33,7 @@ const MASCOTS = [
 
 export function HomeMascots() {
   const pathname = usePathname();
-  if (pathname !== "/") return null;
+  // if (pathname !== "/") return null;
 
   return (
     <span className="hidden items-center -space-x-3 sm:inline-flex" aria-label="Mascots">

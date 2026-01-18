@@ -85,7 +85,7 @@ export default function NewInterviewPage() {
               <Label htmlFor="jobUrl">Job link</Label>
               <Input
                 id="jobUrl"
-                placeholder="https://..."
+                placeholder="https://linkedin.com/jobs/..."
                 value={jobUrl}
                 onChange={(e) => setJobUrl(e.target.value)}
               />
@@ -104,7 +104,7 @@ export default function NewInterviewPage() {
                 <Label htmlFor="title">Role</Label>
                 <Input
                   id="title"
-                  placeholder="e.g. Software Engineer Intern"
+                  placeholder="e.g. Software Engineer"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
@@ -142,11 +142,11 @@ export default function NewInterviewPage() {
           <ul className="mt-3 space-y-2 font-typewriter text-sm text-ink/80">
             <li>• Speak out loud (it feels different than reading)</li>
             <li>
-              • Aim for one clear story (STAR): Situation, Task → Action →
+              • Aim for one clear story (STAR): Situation → Task → Action →
               Result
             </li>
             <li>• Include 1 metric (even if it’s rough)</li>
-            <li>• End with reflection: what you’d do differently next time</li>
+            <li>• End with a reflection: what you’d do differently next time</li>
           </ul>
         </div>
       </div>

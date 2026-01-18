@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${fontTypewriter.variable} ${fontSans.variable}`}>
         <div className="relative min-h-screen paper-bg">
           <StickerLayer />
-          <header className="sticky top-0 z-20 border-b border-light-gray/80 bg-cream/80 backdrop-blur">
+          <header className="z-20 border-b border-light-gray/80 bg-cream/80 backdrop-blur">
             <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
               <Link href="/" className="group inline-flex items-center gap-2">
                 <span className="font-typewriter text-3xl leading-none text-ink transition group-hover:-rotate-1">
@@ -39,13 +39,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <HomeMascots />
               </Link>
 
-              <nav className="flex items-center gap-2">
+              {/* <nav className="flex items-center gap-2">
                 <Link href="/interview/new">
                   <span className="rounded-full border border-light-gray bg-off-white px-3 py-1 font-sans text-xs font-medium text-ink shadow-sm transition hover:-translate-y-0.5 hover:shadow-paper">
                     New session
                   </span>
                 </Link>
-              </nav>
+              </nav> */}
             </div>
           </header>
 

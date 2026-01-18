@@ -26,13 +26,13 @@ export default function HomePage() {
 
             <h1 className="font-typewriter text-3xl leading-tight sm:text-4xl">
               <TypingText
-                text="Practice interviews like you're writing in your favorite journal."
+                text="Practice for interviews like you're writing in your favorite journal."
                 speed={40}
               />
             </h1>
             <p className="max-w-xl font-typewriter text-base text-warm-gray sm:text-lg">
               Paste a job link, get tailored behavioral questions, record out
-              loud, and receive good feedback you can actually use. Plus, check
+              loud, and receive real feedback you can actually use. Plus, check
               out which interview identity critter you get!
             </p>
 
@@ -42,11 +42,11 @@ export default function HomePage() {
                   Start a mock interview
                 </Button>
               </Link>
-              <Link href="/interview/new" className="w-full sm:w-auto">
+              {/* <Link href="/interview/new" className="w-full sm:w-auto">
                 <Button variant="secondary" className="w-full sm:w-auto">
                   Add job context
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
 

@@ -91,8 +91,8 @@ export default function SessionsPage() {
       </div>
 
       <div className="relative overflow-hidden rounded-3xl border border-light-gray bg-off-white/60 p-6 shadow-paper sm:p-8">
-        <div className="pointer-events-none absolute left-10 top-6 h-5 w-24 -rotate-2 rounded-sm bg-butter-yellow/80" />
-        <div className="pointer-events-none absolute right-10 top-10 h-5 w-28 rotate-2 rounded-sm bg-mint/55" />
+        <div className="pointer-events-none absolute left-2 top-1 h-5 w-24 -rotate-12 rounded-sm bg-butter-yellow/80" />
+        <div className="pointer-events-none absolute right-10 top-10 h-5 w-28 rotate-6 rounded-sm bg-mint/55" />
 
         {loading ? (
           <div className="flex items-center gap-2 font-typewriter text-sm text-warm-gray">
@@ -110,9 +110,9 @@ export default function SessionsPage() {
             <p className="font-typewriter text-sm text-warm-gray">
               No sessions yet. Start one and it’ll show up here.
             </p>
-            <Link href="/interview/new">
+            {/* <Link href="/interview/new">
               <Button>Start a session</Button>
-            </Link>
+            </Link> */}
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
