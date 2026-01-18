@@ -51,7 +51,7 @@ export default function CharacterProfilePage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
-          <h1 className="script-title text-4xl sm:text-5xl">Character profile</h1>
+          <h1 className="script-title text-4xl sm:text-5xl">Identity profile</h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
             Your interview storytelling identity!
           </p>

@@ -4,7 +4,7 @@ from celery import shared_task
 from django.db import transaction
 
 from api.models import Interview, InterviewQuestion
-from api.services.ai import classify_archetype, score_job_fit
+from api.services.ai import classify_archetype, generate_interview_feedback, score_job_fit
 from api.services.twelvelabs import DEFAULT_ANALYSIS_PROMPT, analyze_video_from_storage
 
 
@@ -38,7 +38,7 @@ def process_interview(self, interview_id: str) -> None:
             prompt=analysis_prompt,
         )
         transcript = result.transcript
-        feedback = {"summary": result.analysis, "strengths": [], "weaknesses": []}
+        feedback = generate_interview_feedback(transcript=transcript, analysis=result.analysis)
         archetype = classify_archetype(transcript=transcript, analysis=result.analysis)
 
         traits = getattr(getattr(interview.user, "personality_profile", None), "traits", {}) or {}
