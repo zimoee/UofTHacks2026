@@ -70,7 +70,7 @@ body {
   }
 
   .script-title {
-    @apply font-script tracking-tight text-ink;
+    @apply font-typewriter tracking-tight text-ink;
   }
 
   .type-title {
@@ -82,4 +82,3 @@ body {
     image-rendering: crisp-edges;
   }
 }
-
