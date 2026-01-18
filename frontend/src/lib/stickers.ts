@@ -1,6 +1,8 @@
 export type StickerDef = {
   /** Swap this to a PNG path in `/public/stickers/...` */
   src: string;
+  /** Optional fallback if the primary `src` is missing. */
+  fallbackSrc?: string;
   alt: string;
 };
 
@@ -11,7 +13,16 @@ export type StickerDef = {
  * or update `src` here to point to your imported assets.
  */
 export const STICKERS = {
-  star: { src: "/stickers/star.svg", alt: "Star sticker" },
+  // Star variants (drop these PNGs into `public/stickers/`):
+  // - star-1.png
+  // - star-2.png
+  // - star-3.png
+  // - star-4.png
+  star1: { src: "/stickers/star-1.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
+  star2: { src: "/stickers/star-2.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
+  star3: { src: "/stickers/star-3.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
+  star4: { src: "/stickers/star-4.png", fallbackSrc: "/stickers/star.svg", alt: "Star sticker" },
+
   heart: { src: "/stickers/heart.svg", alt: "Heart sticker" },
   tapeBlue: { src: "/stickers/tape-blue.svg", alt: "Blue washi tape sticker" },
 } as const satisfies Record<string, StickerDef>;

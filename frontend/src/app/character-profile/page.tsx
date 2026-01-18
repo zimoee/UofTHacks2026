@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+const BUNNY_DRAWING_SRC = "/characters/bunny.png"; // drop your drawing here
+const BUNNY_FALLBACK_SRC = "/characters/bunny-pixel.svg";
 
 function Bar({ label, value }: { label: string; value: number }) {
   const clamped = Math.max(0, Math.min(100, value));
@@ -43,6 +45,8 @@ export default function CharacterProfilePage() {
     []
   );
 
+  const [bunnySrc, setBunnySrc] = React.useState(BUNNY_DRAWING_SRC);
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -74,13 +78,14 @@ export default function CharacterProfilePage() {
             <div className="pointer-events-none absolute left-8 top-4 h-4 w-24 -rotate-2 rounded-sm bg-soft-blue/35" />
             <p className="font-sans text-[11px] font-semibold text-warm-gray">The Professional (temp)</p>
             <div className="mt-4 grid place-items-center rounded-2xl border border-light-gray bg-off-white p-6">
-              <Image
-                src="/characters/bunny-pixel.svg"
-                alt="Pixelated bunny character"
-                width={192}
-                height={192}
-                className="h-[140px] w-[140px] image-rendering-pixelated"
-                priority={false}
+              <img
+                src={bunnySrc}
+                alt="Bunny character"
+                className={[
+                  "h-[220px] w-[220px] object-contain sm:h-[240px] sm:w-[240px]",
+                  bunnySrc === BUNNY_FALLBACK_SRC ? "image-rendering-pixelated" : "",
+                ].join(" ")}
+                onError={() => setBunnySrc(BUNNY_FALLBACK_SRC)}
               />
             </div>
             <p className="mt-4 font-typewriter text-sm text-ink/80">

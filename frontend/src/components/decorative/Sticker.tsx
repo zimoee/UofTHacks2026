@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client";
+
 import * as React from "react";
 
 import type { StickerDef } from "@/lib/stickers";
@@ -17,19 +18,24 @@ export type StickerProps = {
 };
 
 export function Sticker({ sticker, className, decorative = true, rotate = 0 }: StickerProps) {
+  const [src, setSrc] = React.useState(sticker.src);
+  const triedFallbackRef = React.useRef(false);
+
   return (
     <span
       aria-hidden={decorative ? "true" : undefined}
       className={cn("pointer-events-none absolute select-none", className)}
       style={{ transform: `rotate(${rotate}deg)` }}
     >
-      <Image
-        src={sticker.src}
+      <img
+        src={src}
         alt={decorative ? "" : sticker.alt}
-        width={220}
-        height={220}
-        className="h-full w-full"
-        priority={false}
+        className="h-full w-full object-contain"
+        onError={() => {
+          if (triedFallbackRef.current) return;
+          triedFallbackRef.current = true;
+          if (sticker.fallbackSrc) setSrc(sticker.fallbackSrc);
+        }}
       />
     </span>
   );
