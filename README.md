@@ -1,4 +1,4 @@
-# UofTHacks2026 – Behavioral Interview Feedback (Boilerplate)
+# UofTHacks2026 – It's not you, it's the tech...
 
 Monorepo scaffold:
 - `frontend/`: Next.js + TypeScript + Tailwind + shadcn-style UI + MediaRecorder upload flow

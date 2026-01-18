@@ -20,7 +20,7 @@ const fontSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Behavioral Interview Coach",
+  title: "Interview Journal",
   description: "Record a behavioral interview answer and get strengths/weaknesses feedback.",
 };
 
@@ -45,11 +45,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     New session
                   </span>
                 </Link>
-                <span
-                  className="ml-1 hidden h-10 w-10 rotate-2 rounded-lg border border-light-gray bg-white shadow-polaroid sm:inline-block"
-                  aria-hidden="true"
-                  title="Profile (placeholder)"
-                />
               </nav>
             </div>
           </header>
@@ -60,4 +55,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-

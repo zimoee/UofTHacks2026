@@ -172,7 +172,7 @@ export default function InterviewPage() {
     <div className="space-y-8">
       {" "}
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" onClick={() => router.back()}>
+        <Button variant="secondary" size="sm" onClick={() => router.back()}>
           ← Back
         </Button>
       </div>{" "}
@@ -194,12 +194,8 @@ export default function InterviewPage() {
       <section className="grid gap-6 lg:grid-cols-[1.05fr,0.95fr] lg:items-start">
         <div className="rounded-3xl border border-light-gray bg-off-white/70 p-6 shadow-paper">
           <div className="flex items-baseline justify-between gap-3">
-            <h2 className="font-typewriter text-lg font-bold text-ink">
-              Question stack
-            </h2>
-            <span className="font-sans text-xs text-warm-gray">
-              Pick 2–3 and go
-            </span>
+            <h2 className="font-typewriter text-lg font-bold text-ink">Question stack</h2>
+            <span className="font-sans text-xs text-warm-gray">Pick 1-2 and go</span>
           </div>
 
           {interview.questions?.length ? (

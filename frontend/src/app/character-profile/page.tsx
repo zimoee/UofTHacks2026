@@ -61,7 +61,7 @@ export default function CharacterProfilePage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
           <h1 className="font-typewriter text-4xl sm:text-5xl">
-            Character profile
+            Identity profile
           </h1>
           <p className="max-w-2xl font-typewriter text-sm text-warm-gray sm:text-base">
             Your interview storytelling identity!
@@ -87,7 +87,7 @@ export default function CharacterProfilePage() {
           <div className="relative mx-auto w-full max-w-sm rotate-1 rounded-3xl border border-light-gray bg-white p-5 shadow-polaroid transition duration-300 ease-out hover:-translate-y-1 hover:shadow-lift">
             <div className="pointer-events-none absolute left-8 top-4 h-4 w-24 -rotate-2 rounded-sm bg-soft-blue/35" />
             <p className="font-sans text-[11px] font-semibold text-warm-gray">
-              The Professional (temp)
+              The Bunny
             </p>
             <div className="mt-4 grid place-items-center rounded-2xl border border-light-gray bg-off-white p-6">
               <img
@@ -103,8 +103,7 @@ export default function CharacterProfilePage() {
               />
             </div>
             <p className="mt-4 font-typewriter text-sm text-ink/80">
-              Calm energy, tidy stories, and a gentle push toward stronger
-              results.
+              The Self‑Starter: A momentum‑driven storyteller who notices gaps and jumps in. Their answers lead with action, emphasize initiative, and highlight learning by doing. They thrive in fast‑moving environments and bring energy to teams by getting things started early.
             </p>
           </div>
 

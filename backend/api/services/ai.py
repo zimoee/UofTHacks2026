@@ -260,7 +260,7 @@ def generate_interview_feedback(*, transcript: str, analysis: str) -> dict:
             prompt=(
                 "You are an interview coach. Provide feedback for the candidate.\n"
                 "Return ONLY valid JSON (no markdown) with this schema:\n"
-                '{ "summary": string, "strengths": [string], "weaknesses": [string] }\n\n'
+                '{ "strengths": [string], "weaknesses": [string] }\n\n'
                 "Use the transcript and analysis below. Do not infer protected attributes.\n\n"
                 f"Analysis:\n{analysis}\n\n"
                 f"Transcript:\n{transcript}\n"
@@ -270,11 +270,10 @@ def generate_interview_feedback(*, transcript: str, analysis: str) -> dict:
             payload = _extract_json_from_text(llm_out)
             if payload:
                 parsed = json.loads(payload)
-                summary = str(parsed.get("summary", "")).strip()
                 strengths = parsed.get("strengths") if isinstance(parsed.get("strengths"), list) else []
                 weaknesses = parsed.get("weaknesses") if isinstance(parsed.get("weaknesses"), list) else []
-                return {"summary": summary, "strengths": strengths, "weaknesses": weaknesses}
+                return {"strengths": strengths, "weaknesses": weaknesses}
     except Exception:
         pass
 
-    return {"summary": analysis or "—", "strengths": [], "weaknesses": []}
+    return {"strengths": [], "weaknesses": []}

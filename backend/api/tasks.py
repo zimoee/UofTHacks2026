@@ -38,7 +38,12 @@ def process_interview(self, interview_id: str) -> None:
             prompt=analysis_prompt,
         )
         transcript = result.transcript
-        feedback = generate_interview_feedback(transcript=transcript, analysis=result.analysis)
+        feedback_details = generate_interview_feedback(transcript=transcript, analysis=result.analysis)
+        feedback = {
+            "summary": result.analysis,
+            "strengths": feedback_details.get("strengths", []),
+            "weaknesses": feedback_details.get("weaknesses", []),
+        }
         archetype = classify_archetype(transcript=transcript, analysis=result.analysis)
 
         traits = getattr(getattr(interview.user, "personality_profile", None), "traits", {}) or {}
