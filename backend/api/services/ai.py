@@ -178,8 +178,6 @@ def generate_behavioral_questions(
     base = []
     if company or title:
         base.append(f"Role context: {company or ''} {title or ''}".strip())
-    if job_url:
-        base.append(f"Job link: {job_url}")
 
     context = " | ".join(base) if base else "General behavioral interview"
     questions = [
@@ -251,3 +249,32 @@ def classify_archetype(*, transcript: str, analysis: str) -> dict:
         pass
 
     return {"archetype": "Unknown", "rationale": "No archetype classification available."}
+
+
+def generate_interview_feedback(*, transcript: str, analysis: str) -> dict:
+    """
+    Uses Gemini to generate strengths and improvements from transcript + analysis.
+    """
+    try:
+        llm_out = _llm_generate_text(
+            prompt=(
+                "You are an interview coach. Provide feedback for the candidate.\n"
+                "Return ONLY valid JSON (no markdown) with this schema:\n"
+                '{ "summary": string, "strengths": [string], "weaknesses": [string] }\n\n'
+                "Use the transcript and analysis below. Do not infer protected attributes.\n\n"
+                f"Analysis:\n{analysis}\n\n"
+                f"Transcript:\n{transcript}\n"
+            )
+        )
+        if llm_out:
+            payload = _extract_json_from_text(llm_out)
+            if payload:
+                parsed = json.loads(payload)
+                summary = str(parsed.get("summary", "")).strip()
+                strengths = parsed.get("strengths") if isinstance(parsed.get("strengths"), list) else []
+                weaknesses = parsed.get("weaknesses") if isinstance(parsed.get("weaknesses"), list) else []
+                return {"summary": summary, "strengths": strengths, "weaknesses": weaknesses}
+    except Exception:
+        pass
+
+    return {"summary": analysis or "—", "strengths": [], "weaknesses": []}
