@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Courier_Prime, DM_Sans } from "next/font/google";
 
 import { StickerLayer } from "@/components/decorative/StickerLayer";
+import { HomeMascots } from "@/components/layout/HomeMascots";
 
 import "./globals.css";
 
@@ -35,9 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="font-typewriter text-3xl leading-none text-ink transition group-hover:-rotate-1">
                   Interview Journal
                 </span>
-                <span className="hidden font-typewriter text-xs text-warm-gray sm:inline">
-                  practice • record • reflect
-                </span>
+                <HomeMascots />
               </Link>
 
               <nav className="flex items-center gap-2">
@@ -55,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </header>
 
-          <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">{children}</main>
+          <main className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">{children}</main>
         </div>
       </body>
     </html>

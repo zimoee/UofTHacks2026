@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 32 32">
+  <!-- Simple pixel cat (temporary). Replace later. -->
+  <rect width="32" height="32" fill="#ffffff" />
+  <!-- shadow -->
+  <rect x="10" y="27" width="12" height="2" fill="#E8E6E0" />
+  <!-- ears -->
+  <rect x="10" y="6" width="4" height="4" fill="#2B2926" />
+  <rect x="18" y="6" width="4" height="4" fill="#2B2926" />
+  <rect x="11" y="7" width="2" height="2" fill="#E8C5C5" />
+  <rect x="19" y="7" width="2" height="2" fill="#E8C5C5" />
+  <!-- head outline -->
+  <rect x="9" y="9" width="14" height="14" fill="#2B2926" />
+  <rect x="10" y="10" width="12" height="12" fill="#FAFAF8" />
+  <!-- eyes -->
+  <rect x="13" y="14" width="2" height="2" fill="#2B2926" />
+  <rect x="17" y="14" width="2" height="2" fill="#2B2926" />
+  <!-- nose -->
+  <rect x="15" y="16" width="2" height="1" fill="#2B2926" />
+  <!-- whiskers -->
+  <rect x="10" y="17" width="3" height="1" fill="#8B8B88" />
+  <rect x="19" y="17" width="3" height="1" fill="#8B8B88" />
+  <!-- collar (blue accent) -->
+  <rect x="11" y="21" width="10" height="1" fill="#A8C7D9" />
+</svg>
+
